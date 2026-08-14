@@ -167,6 +167,60 @@ h1 {
   100% { transform: rotate(8deg) translateY(10px); }
 }
 
+.image-hearts {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 1.5rem 0;
+  height: auto;
+}
+
+.profile-image {
+  width: clamp(200px, 50vw, 300px);
+  height: clamp(200px, 50vw, 300px);
+  object-fit: cover;
+  border-radius: 20px;
+  border: 3px solid var(--pink);
+  box-shadow: 0 15px 40px rgba(216, 56, 122, 0.25);
+  animation: imageFloat 3s ease-in-out infinite;
+}
+
+.floating-heart {
+  position: absolute;
+  font-size: 2rem;
+  color: var(--red);
+  animation: floatHeart 3s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.heart-1 { top: -10px; left: 5%; animation-delay: 0s; }
+.heart-2 { top: 10px; right: 8%; animation-delay: 0.3s; }
+.heart-3 { top: 35%; left: -15px; animation-delay: 0.6s; }
+.heart-4 { top: 35%; right: -15px; animation-delay: 0.9s; }
+.heart-5 { bottom: 10px; left: 8%; animation-delay: 1.2s; }
+.heart-6 { bottom: -10px; right: 5%; animation-delay: 1.5s; }
+
+@keyframes imageFloat {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-15px); }
+}
+
+@keyframes floatHeart {
+  0% { opacity: 0; transform: translate(0, 0) scale(0.5); }
+  25% { opacity: 1; }
+  50% { opacity: 1; }
+  75% { opacity: 1; }
+  100% { opacity: 0; transform: translate(var(--tx, 0), -30px) scale(1); }
+}
+
+.heart-1 { --tx: -20px; }
+.heart-2 { --tx: 20px; }
+.heart-3 { --tx: -30px; }
+.heart-4 { --tx: 30px; }
+.heart-5 { --tx: -15px; }
+.heart-6 { --tx: 15px; }
+
 @media (max-width: 640px) {
   .card {
     padding: 2rem 1.1rem 1.5rem;

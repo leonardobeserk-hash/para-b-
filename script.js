@@ -1,49 +1,35 @@
-const body = document.body;
+const layer = document.querySelector('.floating-layer');
 
-for (let i = 0; i < 18; i += 1) {
-  const heart = document.createElement('span');
-  heart.textContent = '❤';
-  heart.className = 'floating-heart';
+function createFloatItem() {
+  const item = document.createElement('div');
+  const isHeart = Math.random() > 0.3;
+  const symbols = ['❤', '💗', '💖', '💞', '✨', '🌷'];
 
-  const left = Math.random() * 100;
-  const delay = Math.random() * 4;
-  const duration = 6 + Math.random() * 4;
-  const size = 12 + Math.random() * 18;
+  item.className = isHeart ? 'heart-float' : 'sparkle-float';
+  item.textContent = symbols[Math.floor(Math.random() * symbols.length)];
 
-  heart.style.left = `${left}%`;
-  heart.style.animationDelay = `${delay}s`;
-  heart.style.animationDuration = `${duration}s`;
-  heart.style.fontSize = `${size}px`;
-  heart.style.opacity = (0.2 + Math.random() * 0.7).toFixed(2);
+  const startX = Math.random() * window.innerWidth;
+  const drift = (Math.random() - 0.5) * 220;
+  const duration = 8 + Math.random() * 8;
+  const delay = Math.random() * 2;
 
-  body.appendChild(heart);
+  item.style.left = `${startX}px`;
+  item.style.setProperty('--drift-x', `${drift}px`);
+  item.style.setProperty('--rot', `${(Math.random() - 0.5) * 180}deg`);
+  item.style.animationDuration = `${duration}s`;
+  item.style.animationDelay = `${delay}s`;
+
+  layer.appendChild(item);
+
+  setTimeout(() => {
+    item.remove();
+  }, (duration + delay) * 1000);
 }
 
-const floatingHearts = document.querySelectorAll('.floating-heart');
+for (let i = 0; i < 26; i++) {
+  setTimeout(createFloatItem, i * 180);
+}
 
-floatingHearts.forEach((heart) => {
-  heart.style.position = 'fixed';
-  heart.style.bottom = '-20px';
-  heart.style.left = heart.style.left || '50%';
-  heart.style.zIndex = '0';
-  heart.style.pointerEvents = 'none';
-  heart.style.animation = 'floatUp 8s linear infinite';
-});
-
-const style = document.createElement('style');
-style.textContent = `
-  @keyframes floatUp {
-    0% {
-      transform: translateY(0) scale(0.9);
-      opacity: 0;
-    }
-    15% {
-      opacity: 1;
-    }
-    100% {
-      transform: translateY(-115vh) scale(1.1);
-      opacity: 0;
-    }
-  }
-`;
-document.head.appendChild(style);
+setInterval(() => {
+  createFloatItem();
+}, 900);
